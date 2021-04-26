@@ -22,34 +22,6 @@ class App extends Component {
     }
   }
 
-  generateData = () => {
-    var tasks = [
-      {
-        id: this.generateID(),
-        name: "Học lập trình ReactJS",
-        status: true,
-      },
-      {
-        id: this.generateID(),
-        name: "Học lập trình Agular",
-        status: false,
-      },
-      {
-        id: this.generateID(),
-        name: "Học lập trình Javascript",
-        status: true,
-      },
-    ];
-
-    this.setState({
-      tasks: tasks,
-    });
-
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-
-    console.log(this.state.tasks);
-  };
-
   s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
@@ -91,17 +63,17 @@ class App extends Component {
     var task = {
       id: this.generateID(),
       name: data.name,
-      status: data.status === 'true' ? true : false,
-    }
+      status: data.status === "true" ? true : false,
+    };
 
     tasks.push(task);
 
     this.setState({
       tasks: tasks,
-    })
+    });
 
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  };
 
   render() {
     var { tasks, isDisplayForm } = this.state; // var tasks = this.state.tasks; (Destructuring)
@@ -135,12 +107,6 @@ class App extends Component {
               className="btn btn-primary"
               onClick={this.onToggleForm}>
               <span className="fa fa-plus mr-5"></span>Thêm Công Việc
-            </button>
-            <button
-              type="button"
-              className="btn btn-danger ml-5"
-              onClick={this.generateData}>
-              Generate Data
             </button>
             {/* Search -Sort */}
             <Control />

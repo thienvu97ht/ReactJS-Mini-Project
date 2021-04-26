@@ -18,14 +18,25 @@ class TaskForm extends Component {
     var name = target.name;
     var value = target.value;
     this.setState({
-      [name] : value,
-    })
-  }
+      [name]: value,
+    });
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.onSubmit(this.state)
-  }
+    this.props.onSubmit(this.state);
+
+    // Clear vả Close form
+    this.onCloseForm();
+    this.onClear();
+  };
+
+  onClear = () => {
+    this.setState({
+      name: "",
+      status: false,
+    });
+  };
 
   render() {
     return (
@@ -67,7 +78,10 @@ class TaskForm extends Component {
                 Lưu Lại
               </button>
               &nbsp;
-              <button type="button" className="btn btn-danger">
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={this.onClear}>
                 <span className="fa fa-close mr-5" />
                 Hủy Bỏ
               </button>
