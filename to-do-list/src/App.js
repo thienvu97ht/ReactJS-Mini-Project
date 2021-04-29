@@ -78,25 +78,38 @@ class App extends Component {
   onUpdateStatus = (id) => {
     var { tasks } = this.state;
     var index = this.findIndex(id);
-    if(index !== -1) {
-      tasks[index].status = !tasks[index].status
+    if (index !== -1) {
+      tasks[index].status = !tasks[index].status;
       this.setState({
-        tasks: tasks
+        tasks: tasks,
       });
       localStorage.setItem("tasks", JSON.stringify(tasks));
     }
-  }
+  };
 
   findIndex = (id) => {
     var { tasks } = this.state;
     var result = -1;
     tasks.forEach((task, index) => {
-      if(task.id === id) {
+      if (task.id === id) {
         result = index;
       }
-    })
+    });
     return result;
-  }
+  };
+
+  onDelete = (id) => {
+    var { tasks } = this.state;
+    var index = this.findIndex(id);
+    if (index !== -1) {
+      tasks.splice(index, 1);
+      this.setState({
+        tasks: tasks,
+      });
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+    this.onCloseForm();
+  };
 
   render() {
     var { tasks, isDisplayForm } = this.state; // var tasks = this.state.tasks; (Destructuring)
@@ -136,7 +149,11 @@ class App extends Component {
             {/* List */}
             <div className="row mt-15">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <TaskList tasks={tasks} onUpdateStatus={this.onUpdateStatus} />
+                <TaskList
+                  tasks={tasks}
+                  onUpdateStatus={this.onUpdateStatus}
+                  onDelete={this.onDelete}
+                />
               </div>
             </div>
           </div>
