@@ -10,6 +10,7 @@ class App extends Component {
     this.state = {
       tasks: [], // id : unique, name, status
       isDisplayForm: false,
+      taskEditing: null,
     };
   }
 
@@ -57,19 +58,27 @@ class App extends Component {
     });
   };
 
+  onShowForm = () => {
+    this.setState({
+      isDisplayForm: true,
+    });
+  };
+
   onSubmit = (data) => {
     var { tasks } = this.state;
-
-    var task = {
-      id: this.generateID(),
-      name: data.name,
-      status: data.status === "true" ? true : false,
-    };
-
-    tasks.push(task);
+    if (data.id === "") {
+      // Thêm
+      data.id = this.generateID();
+      tasks.push(data);
+    } else {
+      // Edit
+      var index = this.findIndex(data.id);
+      tasks[index] = data;
+    }
 
     this.setState({
       tasks: tasks,
+      taskEditing: null,
     });
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -111,10 +120,25 @@ class App extends Component {
     this.onCloseForm();
   };
 
+  onUpdate = (id) => {
+    var { tasks } = this.state;
+    var index = this.findIndex(id);
+    var taskEditing = tasks[index];
+    this.setState({
+      taskEditing: taskEditing,
+    });
+
+    this.onShowForm();
+  };
+
   render() {
-    var { tasks, isDisplayForm } = this.state; // var tasks = this.state.tasks; (Destructuring)
+    var { tasks, isDisplayForm, taskEditing } = this.state; // var tasks = this.state.tasks; (Destructuring)
     var elmTaskForm = isDisplayForm ? (
-      <TaskForm onSubmit={this.onSubmit} onCloseForm={this.onCloseForm} />
+      <TaskForm
+        onSubmit={this.onSubmit}
+        onCloseForm={this.onCloseForm}
+        task={taskEditing}
+      />
     ) : (
       ""
     );
@@ -153,6 +177,7 @@ class App extends Component {
                   tasks={tasks}
                   onUpdateStatus={this.onUpdateStatus}
                   onDelete={this.onDelete}
+                  onUpdate={this.onUpdate}
                 />
               </div>
             </div>
