@@ -20,6 +20,27 @@ class TaskForm extends Component {
     }
   };
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.task) {
+      if (nextProps.task.id !== prevState.id) {
+        return {
+          id: nextProps.task.id,
+          name: nextProps.task.name,
+          status: nextProps.task.status,
+        };
+      }
+    } else {
+      if (prevState.id) {
+        return {
+          id: "",
+          name: "",
+          status: true,
+        };
+      }
+    }
+    return null;
+  }
+
   onCloseForm = () => {
     this.props.onCloseForm();
   };
@@ -28,8 +49,8 @@ class TaskForm extends Component {
     var target = e.target;
     var name = target.name;
     var value = target.value;
-    if(name === 'status') {
-      value = target.value === 'true' ? true : false;
+    if (name === "status") {
+      value = target.value === "true" ? true : false;
     }
     this.setState({
       [name]: value,
