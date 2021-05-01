@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import TaskForm from "./components/TaskForm";
-import Control from "./components/Control";
+import TaskControl from "./components/TaskControl";
 import TaskList from "./components/TaskList";
+import {findIndex} from "lodash";
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +17,8 @@ class App extends Component {
         status: -1,
       },
       keyword: "",
+      sortBy: "name",
+      sortValue: 1,
     };
   }
 
@@ -99,7 +102,10 @@ class App extends Component {
 
   onUpdateStatus = (id) => {
     var { tasks } = this.state;
-    var index = this.findIndex(id);
+    // var index = this.findIndex(id);
+    var index = findIndex(tasks, (task) => {
+      return task.id === id;
+    });
     if (index !== -1) {
       tasks[index].status = !tasks[index].status;
       this.setState({
@@ -160,8 +166,23 @@ class App extends Component {
     });
   };
 
+  onSort = (sortBy, sortValue) => {
+    this.setState({
+      sortBy: sortBy,
+      sortValue: sortValue,
+    });
+  };
+
   render() {
-    var { tasks, isDisplayForm, taskEditing, filter, keyword } = this.state; // var tasks = this.state.tasks; (Destructuring)
+    var {
+      tasks,
+      isDisplayForm,
+      taskEditing,
+      filter,
+      keyword,
+      sortBy,
+      sortValue,
+    } = this.state;
     if (filter) {
       if (filter.name) {
         tasks = tasks.filter((task) => {
@@ -177,12 +198,28 @@ class App extends Component {
       });
     }
 
-    if(keyword) {
+    // Tìm kiếm 
+    if (keyword) {
       tasks = tasks.filter((task) => {
         return task.name.toLowerCase().indexOf(keyword) !== -1;
       });
     }
-    
+
+    // Sắp xếp
+    if (sortBy === "name") {
+      tasks.sort((a, b) => {
+        if (a.name > b.name) return sortValue;
+        else if (a.name < b.name) return -sortValue;
+        else return 0;
+      });
+    } else {
+      tasks.sort((a, b) => {
+        if (a.status > b.status) return -sortValue;
+        else if (a.status < b.status) return sortValue;
+        else return 0;
+      });
+    }
+
     var elmTaskForm = isDisplayForm ? (
       <TaskForm
         onSubmit={this.onSubmit}
@@ -219,7 +256,12 @@ class App extends Component {
               <span className="fa fa-plus mr-5"></span>Thêm Công Việc
             </button>
             {/* Search -Sort */}
-            <Control onSearch={this.onSearch} />
+            <TaskControl
+              onSearch={this.onSearch}
+              onSort={this.onSort}
+              sortBy={sortBy}
+              sortValue={sortValue}
+            />
             {/* List */}
             <div className="row mt-15">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
