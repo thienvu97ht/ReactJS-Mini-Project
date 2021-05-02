@@ -3,13 +3,11 @@ import "./App.css";
 import TaskForm from "./components/TaskForm";
 import TaskControl from "./components/TaskControl";
 import TaskList from "./components/TaskList";
-import {findIndex} from "lodash";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: [], // id : unique, name, status
       isDisplayForm: false,
       taskEditing: null,
       filter: {
@@ -20,15 +18,6 @@ class App extends Component {
       sortBy: "name",
       sortValue: 1,
     };
-  }
-
-  componentDidMount() {
-    if (localStorage && localStorage.getItem("tasks")) {
-      var tasks = JSON.parse(localStorage.getItem("tasks"));
-      this.setState({
-        tasks: tasks,
-      });
-    }
   }
 
   s4() {
@@ -102,10 +91,7 @@ class App extends Component {
 
   onUpdateStatus = (id) => {
     var { tasks } = this.state;
-    // var index = this.findIndex(id);
-    var index = findIndex(tasks, (task) => {
-      return task.id === id;
-    });
+    var index = this.findIndex(id);
     if (index !== -1) {
       tasks[index].status = !tasks[index].status;
       this.setState({
@@ -175,50 +161,49 @@ class App extends Component {
 
   render() {
     var {
-      tasks,
       isDisplayForm,
       taskEditing,
-      filter,
-      keyword,
+      // filter,
+      // keyword,
       sortBy,
       sortValue,
     } = this.state;
-    if (filter) {
-      if (filter.name) {
-        tasks = tasks.filter((task) => {
-          return task.name.toLowerCase().indexOf(filter.name) !== -1;
-        });
-      }
-      tasks = tasks.filter((task) => {
-        if (filter.status === -1) {
-          return task;
-        } else {
-          return task.status === (filter.status === 1 ? true : false);
-        }
-      });
-    }
+    // if (filter) {
+    //   if (filter.name) {
+    //     tasks = tasks.filter((task) => {
+    //       return task.name.toLowerCase().indexOf(filter.name) !== -1;
+    //     });
+    //   }
+    //   tasks = tasks.filter((task) => {
+    //     if (filter.status === -1) {
+    //       return task;
+    //     } else {
+    //       return task.status === (filter.status === 1 ? true : false);
+    //     }
+    //   });
+    // }
 
     // Tìm kiếm 
-    if (keyword) {
-      tasks = tasks.filter((task) => {
-        return task.name.toLowerCase().indexOf(keyword) !== -1;
-      });
-    }
+    // if (keyword) {
+    //   tasks = tasks.filter((task) => {
+    //     return task.name.toLowerCase().indexOf(keyword) !== -1;
+    //   });
+    // }
 
     // Sắp xếp
-    if (sortBy === "name") {
-      tasks.sort((a, b) => {
-        if (a.name > b.name) return sortValue;
-        else if (a.name < b.name) return -sortValue;
-        else return 0;
-      });
-    } else {
-      tasks.sort((a, b) => {
-        if (a.status > b.status) return -sortValue;
-        else if (a.status < b.status) return sortValue;
-        else return 0;
-      });
-    }
+    // if (sortBy === "name") {
+    //   tasks.sort((a, b) => {
+    //     if (a.name > b.name) return sortValue;
+    //     else if (a.name < b.name) return -sortValue;
+    //     else return 0;
+    //   });
+    // } else {
+    //   tasks.sort((a, b) => {
+    //     if (a.status > b.status) return -sortValue;
+    //     else if (a.status < b.status) return sortValue;
+    //     else return 0;
+    //   });
+    // }
 
     var elmTaskForm = isDisplayForm ? (
       <TaskForm
