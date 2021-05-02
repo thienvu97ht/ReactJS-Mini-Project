@@ -1,48 +1,18 @@
 import { createStore } from "redux";
-
-var initialState = {
-  status: false,
-  sort: {
-    by: "name",
-    value: 1,
-  },
-};
-
-var myReducer = (state = initialState, action) => {
-  if (action.type === "TOGGLE_STATUS") {
-    state.status = !state.status;
-    return state;
-  }
-  if (action.type === "SORT") {
-    var { by, value } = action.sort;
-    var { status } = state;
-
-    return {
-      status: status,
-      sort: { by: by, value: value },
-    };
-  }
-  return state;
-};
+import { status, sort } from "./actions/index";
+import myReducer from "./reducers/index"
 
 const store = createStore(myReducer);
 console.log("Default", store.getState());
 // Thực hiện công việc thay đổi status
-var action = {
-  type: "TOGGLE_STATUS",
-};
-store.dispatch(action);
-
+store.dispatch(status());
 console.log("TOGGLE_STATUS", store.getState());
 
 // Thực hiện công việc sắp xếp name Z-A
-var sortAction = {
-  type: "SORT",
-  sort: {
+store.dispatch(
+  sort({
     by: "name",
     value: -1,
-  },
-};
-
-store.dispatch(sortAction);
+  })
+);
 console.log("SORT", store.getState());
