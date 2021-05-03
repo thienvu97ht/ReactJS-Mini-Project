@@ -4,6 +4,7 @@ import TaskForm from "./components/TaskForm";
 import TaskControl from "./components/TaskControl";
 import TaskList from "./components/TaskList";
 import { connect } from "react-redux";
+import * as actions from "./actions/index";
 
 class App extends Component {
   constructor(props) {
@@ -21,23 +22,18 @@ class App extends Component {
   }
 
   onToggleForm = () => {
-    if (this.state.isDisplayForm && this.state.taskEditing !== null) {
-      this.setState({
-        isDisplayForm: true,
-        taskEditing: null,
-      });
-    } else {
-      this.setState({
-        isDisplayForm: !this.state.isDisplayForm,
-        taskEditing: null,
-      });
-    }
-  };
-
-  onCloseForm = () => {
-    this.setState({
-      isDisplayForm: false,
-    });
+    // if (this.state.isDisplayForm && this.state.taskEditing !== null) {
+    //   this.setState({
+    //     isDisplayForm: true,
+    //     taskEditing: null,
+    //   });
+    // } else {
+    //   this.setState({
+    //     isDisplayForm: !this.state.isDisplayForm,
+    //     taskEditing: null,
+    //   });
+    // }
+    this.props.onToggleForm();
   };
 
   onShowForm = () => {
@@ -163,11 +159,7 @@ class App extends Component {
     //   });
     // }
 
-    var elmTaskForm = isDisplayForm ? (
-      <TaskForm onCloseForm={this.onCloseForm} task={taskEditing} />
-    ) : (
-      ""
-    );
+    var elmTaskForm = isDisplayForm ? <TaskForm task={taskEditing} /> : "";
     return (
       <div className="container">
         <div className="text-center">
@@ -220,11 +212,17 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    isDisplayForm: state.isDisplayForm,
+  };
 };
 
 const mapDispatchToProps = (dispatch, props) => {
-  return {}
+  return {
+    onToggleForm: () => {
+      dispatch(actions.toggleForm());
+    },
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
