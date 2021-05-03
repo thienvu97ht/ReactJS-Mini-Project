@@ -23,8 +23,12 @@ var randomID = () => {
   );
 };
 
+// Lấy dữ liệu từ localStorage
 var data = JSON.parse(localStorage.getItem("tasks"));
+
+// Đưa dữ liệu từ localStorage vào state
 var initialState = data ? data : [];
+
 
 var myReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -38,7 +42,7 @@ var myReducer = (state = initialState, action) => {
       };
       state.push(newTask);
       localStorage.setItem("tasks", JSON.stringify(state));
-      return [...state];
+      return [...state]; // (Spread)
     default:
       return state;
   }

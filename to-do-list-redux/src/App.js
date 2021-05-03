@@ -3,12 +3,12 @@ import "./App.css";
 import TaskForm from "./components/TaskForm";
 import TaskControl from "./components/TaskControl";
 import TaskList from "./components/TaskList";
+import { connect } from "react-redux";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDisplayForm: false,
       taskEditing: null,
       filter: {
         name: "",
@@ -18,29 +18,6 @@ class App extends Component {
       sortBy: "name",
       sortValue: 1,
     };
-  }
-
-  s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-
-  generateID() {
-    return (
-      this.s4() +
-      this.s4() +
-      "-" +
-      this.s4() +
-      "-" +
-      this.s4() +
-      "_" +
-      this.s4() +
-      "-" +
-      this.s4() +
-      this.s4() +
-      this.s4()
-    );
   }
 
   onToggleForm = () => {
@@ -67,26 +44,6 @@ class App extends Component {
     this.setState({
       isDisplayForm: true,
     });
-  };
-
-  onSubmit = (data) => {
-    var { tasks } = this.state;
-    if (data.id === "") {
-      // Thêm
-      data.id = this.generateID();
-      tasks.push(data);
-    } else {
-      // Edit
-      var index = this.findIndex(data.id);
-      tasks[index] = data;
-    }
-
-    this.setState({
-      tasks: tasks,
-      taskEditing: null,
-    });
-
-    localStorage.setItem("tasks", JSON.stringify(tasks));
   };
 
   onUpdateStatus = (id) => {
@@ -161,13 +118,14 @@ class App extends Component {
 
   render() {
     var {
-      isDisplayForm,
       taskEditing,
       // filter,
       // keyword,
       sortBy,
       sortValue,
     } = this.state;
+
+    var { isDisplayForm } = this.props;
     // if (filter) {
     //   if (filter.name) {
     //     tasks = tasks.filter((task) => {
@@ -183,7 +141,7 @@ class App extends Component {
     //   });
     // }
 
-    // Tìm kiếm 
+    // Tìm kiếm
     // if (keyword) {
     //   tasks = tasks.filter((task) => {
     //     return task.name.toLowerCase().indexOf(keyword) !== -1;
@@ -206,11 +164,7 @@ class App extends Component {
     // }
 
     var elmTaskForm = isDisplayForm ? (
-      <TaskForm
-        onSubmit={this.onSubmit}
-        onCloseForm={this.onCloseForm}
-        task={taskEditing}
-      />
+      <TaskForm onCloseForm={this.onCloseForm} task={taskEditing} />
     ) : (
       ""
     );
@@ -265,4 +219,12 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);
