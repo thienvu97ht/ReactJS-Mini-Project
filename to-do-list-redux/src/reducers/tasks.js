@@ -40,6 +40,8 @@ var data = JSON.parse(localStorage.getItem("tasks"));
 var initialState = data ? data : [];
 
 var myReducer = (state = initialState, action) => {
+  var id = "";
+  var index = -1;
   switch (action.type) {
     case types.LIST_ALL:
       return state;
@@ -53,13 +55,23 @@ var myReducer = (state = initialState, action) => {
       localStorage.setItem("tasks", JSON.stringify(state));
       return [...state]; // (Spread)
     case types.UPDATE_STATUS_TASK:
-      var id = action.id;
-      var index = findIndex(state, id);
+      id = action.id;
+      index = findIndex(state, id);
 
+      // Override state[index]
       state[index] = {
         ...state[index],
         status: !state[index].status,
-      }
+      };
+
+      localStorage.setItem("tasks", JSON.stringify(state));
+      return [...state]; // (Spread)
+    case types.DELETE_TASK:
+      id = action.id;
+      index = findIndex(state, id);
+
+      // Xóa State[index]
+      state.splice(index, 1);
 
       localStorage.setItem("tasks", JSON.stringify(state));
       return [...state]; // (Spread)
