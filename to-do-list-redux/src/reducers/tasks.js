@@ -45,13 +45,25 @@ var myReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.LIST_ALL:
       return state;
-    case types.ADD_TASK:
-      var newTask = {
-        id: randomID(),
+    case types.SAVE_TASK:
+      
+      var task = {
+        id: action.task.id,
         name: action.task.name,
         status: action.task.status,
       };
-      state.push(newTask);
+      
+      if (!task.id) {
+        task.id = randomID();
+        state.push(task);
+      } else {
+        id = task.id;
+        index = findIndex(state, id);
+
+        // Override state[index]
+        state[index] = task;
+      }
+
       localStorage.setItem("tasks", JSON.stringify(state));
       return [...state]; // (Spread)
     case types.UPDATE_STATUS_TASK:

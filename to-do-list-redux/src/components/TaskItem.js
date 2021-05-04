@@ -13,8 +13,8 @@ class TaskItem extends Component {
   };
 
   onEditTask = () => {
-    this.props.onOpenForm()
-    this.props.onEditTask(this.props.task)
+    this.props.onOpenForm();
+    this.props.onEditTask(this.props.task);
   };
 
   render() {

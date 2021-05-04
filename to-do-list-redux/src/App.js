@@ -22,18 +22,12 @@ class App extends Component {
   }
 
   onToggleForm = () => {
-    // if (this.state.isDisplayForm && this.state.taskEditing !== null) {
-    //   this.setState({
-    //     isDisplayForm: true,
-    //     taskEditing: null,
-    //   });
-    // } else {
-    //   this.setState({
-    //     isDisplayForm: !this.state.isDisplayForm,
-    //     taskEditing: null,
-    //   });
-    // }
     this.props.onToggleForm();
+    this.props.onClearTask({
+      id: "",
+      name: "",
+      status: false,
+    });
   };
 
   onShowForm = () => {
@@ -89,7 +83,6 @@ class App extends Component {
 
   render() {
     var {
-      taskEditing,
       // filter,
       // keyword,
       sortBy,
@@ -145,7 +138,7 @@ class App extends Component {
               isDisplayForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : ""
             }>
             {/* Form */}
-            <TaskForm task={taskEditing} />
+            <TaskForm />
           </div>
           <div
             className={
@@ -169,10 +162,7 @@ class App extends Component {
             {/* List */}
             <div className="row mt-15">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <TaskList
-                  onUpdate={this.onUpdate}
-                  onFilter={this.onFilter}
-                />
+                <TaskList onUpdate={this.onUpdate} onFilter={this.onFilter} />
               </div>
             </div>
           </div>
@@ -192,6 +182,9 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     onToggleForm: () => {
       dispatch(actions.toggleForm());
+    },
+    onClearTask: (task) => {
+      dispatch(actions.editTask(task));
     },
   };
 };
