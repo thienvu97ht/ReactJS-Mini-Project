@@ -10,7 +10,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      taskEditing: null,
       filter: {
         name: "",
         status: -1,
@@ -22,7 +21,13 @@ class App extends Component {
   }
 
   onToggleForm = () => {
-    this.props.onToggleForm();
+    var { itemEditing } = this.props;
+    if (itemEditing && itemEditing.id !== "") {
+      this.props.onOpenForm();
+    } else {
+      this.props.onToggleForm();
+    }
+
     this.props.onClearTask({
       id: "",
       name: "",
@@ -30,11 +35,6 @@ class App extends Component {
     });
   };
 
-  onShowForm = () => {
-    this.setState({
-      isDisplayForm: true,
-    });
-  };
 
   findIndex = (id) => {
     var { tasks } = this.state;
@@ -45,17 +45,6 @@ class App extends Component {
       }
     });
     return result;
-  };
-
-  onUpdate = (id) => {
-    var { tasks } = this.state;
-    var index = this.findIndex(id);
-    var taskEditing = tasks[index];
-    this.setState({
-      taskEditing: taskEditing,
-    });
-
-    this.onShowForm();
   };
 
   onFilter = (filterName, filterStatus) => {
@@ -162,7 +151,7 @@ class App extends Component {
             {/* List */}
             <div className="row mt-15">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <TaskList onUpdate={this.onUpdate} onFilter={this.onFilter} />
+                <TaskList onFilter={this.onFilter} />
               </div>
             </div>
           </div>
@@ -175,6 +164,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     isDisplayForm: state.isDisplayForm,
+    itemEditing: state.itemEditing,
   };
 };
 
@@ -185,6 +175,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onClearTask: (task) => {
       dispatch(actions.editTask(task));
+    },
+    onOpenForm: () => {
+      dispatch(actions.openForm());
     },
   };
 };

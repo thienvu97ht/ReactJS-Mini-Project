@@ -38,7 +38,7 @@ class TaskForm extends Component {
         return {
           id: "",
           name: "",
-          status: true,
+          status: false,
         };
       }
     }
@@ -83,7 +83,7 @@ class TaskForm extends Component {
       <div className="panel panel-warning">
         <div className="panel-heading">
           <h3 className="panel-title">
-            { !this.state.id ? "Thêm Công Việc" : "Cập nhật công việc"}
+            {!this.state.id ? "Thêm Công Việc" : "Cập nhật công việc"}
             <span
               className="fa fa-times-circle text-right"
               onClick={this.onCloseForm}
