@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TaskItem from "./TaskItem";
 import { connect } from "react-redux";
+import * as actions from "../actions/index";
 
 class TaskList extends Component {
   constructor(props) {
@@ -14,11 +15,14 @@ class TaskList extends Component {
   onChange = (e) => {
     var targer = e.target;
     var name = targer.name;
-    var value = targer.value;
-    this.props.onFilter(
-      name === "filterName" ? value : this.state.filterName,
-      name === "filterStatus" ? value : this.state.filterStatus
-    );
+    var value = targer.type === "checkbox" ? targer.checked : targer.value;
+
+    var filter = {
+      name: name === "filterName" ? value : this.state.filterName,
+      status: name === "filterStatus" ? value : this.state.filterStatus,
+    };
+
+    this.props.onFilterTask(filter);
 
     this.setState({
       [name]: value,
@@ -26,7 +30,25 @@ class TaskList extends Component {
   };
 
   render() {
-    var { tasks } = this.props; // (Destructuring)
+    var { tasks, filterTable } = this.props; // (Destructuring)
+    // Filter name on table
+    if (filterTable.name) {
+      tasks = tasks.filter((task) => {
+        return (
+          task.name.toLowerCase().indexOf(filterTable.name.toLowerCase()) !== -1
+        );
+      });
+    }
+
+    // Filter status on table
+    tasks = tasks.filter((task) => {
+      if (filterTable.status === -1) {
+        return task;
+      } else {
+        return task.status === (filterTable.status === 1 ? true : false);
+      }
+    });
+
     var { filterName, filterStatus } = this.state;
     var elmTasks = tasks.map((task, index) => {
       return (
@@ -83,7 +105,16 @@ class TaskList extends Component {
 const mapStateToProps = (state) => {
   return {
     tasks: state.tasks,
+    filterTable: state.filterTable,
   };
 };
 
-export default connect(mapStateToProps, null)(TaskList);
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onFilterTask: (filter) => {
+      dispatch(actions.filterTask(filter));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskList);

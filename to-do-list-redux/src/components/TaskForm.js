@@ -24,25 +24,38 @@ class TaskForm extends Component {
     }
   };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.itemEditing) {
-      if (nextProps.itemEditing.id !== prevState.id) {
-        return {
-          id: nextProps.itemEditing.id,
-          name: nextProps.itemEditing.name,
-          status: nextProps.itemEditing.status,
-        };
-      }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps.itemEditing) {
+  //     if (nextProps.itemEditing.id !== prevState.id) {
+  //       console.log("props", nextProps);
+  //       return {
+  //         id: nextProps.itemEditing.id,
+  //         name: nextProps.itemEditing.name,
+  //         status: nextProps.itemEditing.status,
+  //       };
+  //     }
+  //   } else {
+  //     if (prevState.id) {
+  //       return {
+  //         id: "",
+  //         name: "",
+  //         status: false,
+  //       };
+  //     }
+  //   }
+  //   return null;
+  // }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps && nextProps.itemEditing) {
+      this.setState({
+        id: nextProps.itemEditing.id,
+        name: nextProps.itemEditing.name,
+        status: nextProps.itemEditing.status,
+      });
     } else {
-      if (prevState.id) {
-        return {
-          id: "",
-          name: "",
-          status: false,
-        };
-      }
+      this.onClear();
     }
-    return null;
   }
 
   onCloseForm = () => {

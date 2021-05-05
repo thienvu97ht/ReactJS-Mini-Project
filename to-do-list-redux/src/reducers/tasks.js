@@ -52,14 +52,13 @@ var myReducer = (state = initialState, action) => {
         name: action.task.name,
         status: action.task.status,
       };
-      
+
       if (!task.id) {
         task.id = randomID();
         state.push(task);
       } else {
         id = task.id;
         index = findIndex(state, id);
-
         // Override state[index]
         state[index] = task;
       }
