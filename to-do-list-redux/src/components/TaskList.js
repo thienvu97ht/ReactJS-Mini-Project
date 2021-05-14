@@ -30,7 +30,7 @@ class TaskList extends Component {
   };
 
   render() {
-    var { tasks, filterTable } = this.props; // (Destructuring)
+    var { tasks, filterTable, keyword } = this.props; // (Destructuring)
     // Filter name on table
     if (filterTable.name) {
       tasks = tasks.filter((task) => {
@@ -48,6 +48,13 @@ class TaskList extends Component {
         return task.status === (filterTable.status === 1 ? true : false);
       }
     });
+
+    // Tìm kiếm
+    if (keyword) {
+      tasks = tasks.filter((task) => {
+        return task.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
+      });
+    }
 
     var { filterName, filterStatus } = this.state;
     var elmTasks = tasks.map((task, index) => {
@@ -106,6 +113,7 @@ const mapStateToProps = (state) => {
   return {
     tasks: state.tasks,
     filterTable: state.filterTable,
+    keyword: state.search,
   };
 };
 
