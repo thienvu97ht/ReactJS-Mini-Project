@@ -46,11 +46,13 @@ var myReducer = (state = initialState, action) => {
     case types.LIST_ALL:
       return state;
     case types.SAVE_TASK:
-      
       var task = {
         id: action.task.id,
         name: action.task.name,
-        status: action.task.status,
+        status:
+          action.task.status === "true" || action.task.status === true
+            ? true
+            : false,
       };
 
       if (!task.id) {
