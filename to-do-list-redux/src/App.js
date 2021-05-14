@@ -7,15 +7,8 @@ import { connect } from "react-redux";
 import * as actions from "./actions/index";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      keyword: "",
-      sortBy: "name",
-      sortValue: 1,
-    };
-  }
 
+  // Toggle Redux
   onToggleForm = () => {
     var { itemEditing } = this.props;
     if (itemEditing && itemEditing.id !== "") {
@@ -31,61 +24,9 @@ class App extends Component {
     });
   };
 
-
-  findIndex = (id) => {
-    var { tasks } = this.state;
-    var result = -1;
-    tasks.forEach((task, index) => {
-      if (task.id === id) {
-        result = index;
-      }
-    });
-    return result;
-  };
-
-  onSearch = (keyword) => {
-    this.setState({
-      keyword: keyword,
-    });
-  };
-
-  onSort = (sortBy, sortValue) => {
-    this.setState({
-      sortBy: sortBy,
-      sortValue: sortValue,
-    });
-  };
-
   render() {
-    var {
-      // keyword,
-      sortBy,
-      sortValue,
-    } = this.state;
-
     var { isDisplayForm } = this.props;
-    
-    // Tìm kiếm
-    // if (keyword) {
-    //   tasks = tasks.filter((task) => {
-    //     return task.name.toLowerCase().indexOf(keyword) !== -1;
-    //   });
-    // }
 
-    // Sắp xếp
-    // if (sortBy === "name") {
-    //   tasks.sort((a, b) => {
-    //     if (a.name > b.name) return sortValue;
-    //     else if (a.name < b.name) return -sortValue;
-    //     else return 0;
-    //   });
-    // } else {
-    //   tasks.sort((a, b) => {
-    //     if (a.status > b.status) return -sortValue;
-    //     else if (a.status < b.status) return sortValue;
-    //     else return 0;
-    //   });
-    // }
     return (
       <div className="container">
         <div className="text-center">
@@ -113,12 +54,7 @@ class App extends Component {
               <span className="fa fa-plus mr-5"></span>Thêm Công Việc
             </button>
             {/* Search -Sort */}
-            <TaskControl
-              onSearch={this.onSearch}
-              onSort={this.onSort}
-              sortBy={sortBy}
-              sortValue={sortValue}
-            />
+            <TaskControl />
             {/* List */}
             <div className="row mt-15">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">

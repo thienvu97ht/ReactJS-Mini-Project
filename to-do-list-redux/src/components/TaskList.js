@@ -30,7 +30,8 @@ class TaskList extends Component {
   };
 
   render() {
-    var { tasks, filterTable, keyword } = this.props; // (Destructuring)
+    var { tasks, filterTable, keyword, sort } = this.props; // (Destructuring)
+    
     // Filter name on table
     if (filterTable.name) {
       tasks = tasks.filter((task) => {
@@ -53,6 +54,21 @@ class TaskList extends Component {
     if (keyword) {
       tasks = tasks.filter((task) => {
         return task.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
+      });
+    }
+
+    // Sắp xếp
+    if (sort.by === "name") {
+      tasks.sort((a, b) => {
+        if (a.name > b.name) return sort.value;
+        else if (a.name < b.name) return -sort.value;
+        else return 0;
+      });
+    } else {
+      tasks.sort((a, b) => {
+        if (a.status > b.status) return -sort.value;
+        else if (a.status < b.status) return sort.value;
+        else return 0;
       });
     }
 
@@ -114,6 +130,7 @@ const mapStateToProps = (state) => {
     tasks: state.tasks,
     filterTable: state.filterTable,
     keyword: state.search,
+    sort: state.sort,
   };
 };
 
