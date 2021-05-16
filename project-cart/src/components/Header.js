@@ -275,7 +275,6 @@ class Header extends Component {
                 className="nav-link dropdown-toggle waves-effect waves-light"
                 id="dropdownMenu1"
                 data-toggle="dropdown"
-                aria-haspopup="true"
                 aria-expanded="false">
                 <i className="fa fa-user"></i> Tài Khoản
               </a>
