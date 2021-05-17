@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Header from "../src/components/Header";
-import Products from "../src/components/Products";
 import Message from "../src/components/Message";
 import Cart from "../src/components/Cart";
 import Footer from "../src/components/Footer";
