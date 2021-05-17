@@ -1,13 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Cart from "../components/Cart";
+import CartItem from "../components/CartItem";
 import PropTypes from "prop-types";
+import * as Message from "../constants/Message";
 
 class CartContainer extends Component {
   render() {
     var { cart } = this.props;
-    console.log(cart);
-    return <div></div>;
+    return <Cart>{this.showCartItem(cart)}</Cart>;
   }
+
+  showCartItem = (cart) => {
+    var result = Message.MSG_CART_EMPTY;
+    if (cart.length > 0) {
+      result = cart.map((item, index) => {
+        return <CartItem key={index} item={item} index={index} />;
+      });
+    }
+    return result;
+  };
 }
 
 CartContainer.propTypes = {
@@ -21,7 +33,7 @@ CartContainer.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    cart : state.cart,
+    cart: state.cart,
   };
 };
 
