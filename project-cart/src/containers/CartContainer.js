@@ -2,13 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Cart from "../components/Cart";
 import CartItem from "../components/CartItem";
+import CartResult from "../components/CartResult";
 import PropTypes from "prop-types";
 import * as Message from "../constants/Message";
 
 class CartContainer extends Component {
   render() {
     var { cart } = this.props;
-    return <Cart>{this.showCartItem(cart)}</Cart>;
+    return (
+      <Cart>
+        {this.showCartItem(cart)}
+        {this.showTotalAmount(cart)}
+      </Cart>
+    );
   }
 
   showCartItem = (cart) => {
@@ -17,6 +23,14 @@ class CartContainer extends Component {
       result = cart.map((item, index) => {
         return <CartItem key={index} item={item} index={index} />;
       });
+    }
+    return result;
+  };
+
+  showTotalAmount = (cart) => {
+    var result = null;
+    if (cart.length > 0) {
+      result = <CartResult cart={cart} />;
     }
     return result;
   };
