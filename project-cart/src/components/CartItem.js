@@ -1,8 +1,17 @@
 import React, { Component } from "react";
 
 class CartItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      quantity: 1,
+    };
+  }
+
   render() {
     var { item } = this.props;
+    var { quantity } = item.quantity > 0 ? item : this.state;
+    
     return (
       <tr>
         <th scope="row">
@@ -19,17 +28,23 @@ class CartItem extends Component {
         </td>
         <td>{item.product.price}$</td>
         <td className="center-on-small-only">
-          <span className="qty">{item.quantity} </span>
+          <span className="qty">{quantity} </span>
           <div className="btn-group radio-group" data-toggle="buttons">
             <label
+              onClick={() =>
+                this.onUpdateQuantity(item.product, item.quantity - 1)
+              }
               className="btn btn-sm btn-primary
                                             btn-rounded waves-effect waves-light">
-              <a href="!#">—</a>
+              <button>—</button>
             </label>
             <label
+              onClick={() =>
+                this.onUpdateQuantity(item.product, item.quantity + 1)
+              }
               className="btn btn-sm btn-primary
                                             btn-rounded waves-effect waves-light">
-              <a href="!#">+</a>
+              <button>+</button>
             </label>
           </div>
         </td>
@@ -49,15 +64,23 @@ class CartItem extends Component {
       </tr>
     );
   }
+  onUpdateQuantity = (product, quantity) => {
+    if (quantity > 0) {
+      this.setState({
+        quantity,
+      });
+    }
+    this.props.onUpdateProductInCart(product, quantity)
+  };
+
+  onDelete = (product) => {
+    var { onDeleteProductInCart } = this.props;
+    onDeleteProductInCart(product);
+  };
 
   showSubTotal = (price, quantity) => {
     return price * quantity;
   };
-
-  onDelete = (product) =>{
-    var { onDeleteProductInCart} = this.props;
-    onDeleteProductInCart(product)
-  }
 }
 
 export default CartItem;
