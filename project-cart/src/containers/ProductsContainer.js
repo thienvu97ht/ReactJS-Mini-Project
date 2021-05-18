@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Product from "../components/Product";
 import Products from "../components/Products";
 import PropTypes from "prop-types";
-import { actAddToCart } from "../actions/index";
+import { actAddToCart, actChangeMessage } from "../actions/index";
 
 class ProductsContainer extends Component {
   render() {
@@ -13,11 +13,11 @@ class ProductsContainer extends Component {
 
   showProduct(products) {
     var result = null;
-    var { onAddToCart } = this.props;
+    var { onAddToCart, onChangeMessage } = this.props;
     if (products.length > 0) {
       result = products.map((product, index) => {
         return (
-          <Product key={index} product={product} onAddToCart={onAddToCart} />
+          <Product key={index} product={product} onAddToCart={onAddToCart} onChangeMessage={onChangeMessage}/>
         );
       });
     }
@@ -37,6 +37,7 @@ ProductsContainer.propTypes = {
       rating: PropTypes.number.isRequired,
     })
   ).isRequired,
+  onChangeMessage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -49,6 +50,9 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     onAddToCart: (product) => {
       dispatch(actAddToCart(product, 1));
+    },
+    onChangeMessage: (message) => {
+      dispatch(actChangeMessage(message));
     },
   };
 };
