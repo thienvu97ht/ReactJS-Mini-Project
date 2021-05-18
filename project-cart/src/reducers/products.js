@@ -21,7 +21,7 @@ var initialState = [
   },
   {
     id: 3,
-    name: "Samsung Galaxy Note 20 Ultra",
+    name: "Samsung Galaxy Note 20",
     image:
       "https://cdn.tgdd.vn/Products/Images/42/220522/samsung-galaxy-note-20-ultra-vangdong-600x600-200x200.jpg",
     description: "Sản phẩm do Samsung sản xuất",

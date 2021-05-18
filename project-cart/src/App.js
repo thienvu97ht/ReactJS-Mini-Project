@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from "../src/components/Header";
-import Message from "../src/components/Message";
 import CartContainer from "../src/containers/CartContainer";
+import MessageContainer from "../src/containers/MessageContainer";
 import Footer from "../src/components/Footer";
 import ProductsContainer from "../src/containers/ProductsContainer";
 
@@ -18,7 +18,7 @@ class App extends Component {
             <ProductsContainer />
 
             {/* Message */}
-            <Message />
+            <MessageContainer />
 
             {/* Cart */}
             <CartContainer />
