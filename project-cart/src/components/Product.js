@@ -31,7 +31,8 @@ class Product extends Component {
                   data-toggle="tooltip"
                   data-placement="top"
                   title=""
-                  data-original-title="Add to Cart">
+                  data-original-title="Add to Cart"
+                  onClick={() => this.onAddToCart(product)}>
                   <i className="fa fa-shopping-cart"></i>
                 </a>
               </span>
@@ -42,7 +43,11 @@ class Product extends Component {
     );
   }
 
-  showRating(rating) {
+  onAddToCart = (product) => {
+    this.props.onAddToCart(product)
+  };
+
+  showRating = (rating) => {
     var result = [];
     for (var i = 1; i <= rating; i++) {
       result.push(<i className="fa fa-star" key={i}></i>);
@@ -51,7 +56,7 @@ class Product extends Component {
       result.push(<i className="fa fa-star-o" key={rating + j}></i>);
     }
     return result;
-  }
+  };
 }
 
 export default Product;

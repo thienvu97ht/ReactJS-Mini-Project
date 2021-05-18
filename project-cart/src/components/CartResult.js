@@ -35,7 +35,6 @@ class CartResult extends Component {
         total += cart[i].product.price * cart[i].quantity;
       }
     }
-    console.log(cart);
     return total;
   };
 }
