@@ -23,6 +23,9 @@ class Product extends Component {
               <li>{this.showRating(product.rating)}</li>
             </ul>
             <p className="card-text">{product.description}</p>
+            <p className="card-text">
+              Còn <b>{product.inventory}</b> sản phẩm
+            </p>
             <div className="card-footer">
               <span className="left">{product.price} $</span>
               <span className="right">
@@ -32,7 +35,9 @@ class Product extends Component {
                   data-placement="top"
                   title=""
                   data-original-title="Add to Cart"
-                  onClick={() => this.onAddToCart(product)}>
+                  onClick={() =>
+                    this.onAddToCart(product, 1, product.inventory)
+                  }>
                   <i className="fa fa-shopping-cart"></i>
                 </button>
               </span>
@@ -43,9 +48,10 @@ class Product extends Component {
     );
   }
 
-  onAddToCart = (product) => {
-    this.props.onAddToCart(product);
+  onAddToCart = (product, quantity, inventory) => {
+    this.props.onAddToCart(product, quantity, inventory);
     this.props.onChangeMessage(Message.MSG_ADD_TO_CART_SUCCESS);
+    this.props.onUpdateProductInventory(product, inventory);
   };
 
   showRating = (rating) => {

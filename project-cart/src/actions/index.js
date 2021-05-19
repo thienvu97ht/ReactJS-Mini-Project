@@ -1,10 +1,11 @@
 import * as Types from "../constants/ActionTypes";
 
-export const actAddToCart = (product, quantity) => {
+export const actAddToCart = (product, quantity, inventory) => {
   return {
     type: Types.ADD_TO_CART,
     product,
     quantity,
+    inventory,
   };
 };
 
@@ -25,6 +26,22 @@ export const actDeleteProductInCart = (product) => {
 export const actUpdateProductInCart = (product, quantity) => {
   return {
     type: Types.UPDATE_PRODUCT_IN_CART,
+    product,
+    quantity,
+  };
+};
+
+export const actUpdateProductInventory = (product, inventory) => {
+  return {
+    type: Types.UPDATE_PRODUCT_INVENTORY,
+    product,
+    inventory,
+  };
+};
+
+export const actUpdateInventoryWithDelete = (product, quantity) => {
+  return {
+    type: Types.UPDATE_INVENTORY_WITH_DELETE,
     product,
     quantity,
   };

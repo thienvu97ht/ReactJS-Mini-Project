@@ -51,14 +51,16 @@ class CartItem extends Component {
             data-placement="top"
             title=""
             data-original-title="Remove item"
-            onClick={() => this.onDelete(item.product)}>
+            onClick={() =>
+              this.onDelete(item.product, item.quantity)
+            }>
             X
           </button>
         </td>
       </tr>
     );
   }
-  
+
   onUpdateQuantity = (product, quantity) => {
     if (quantity > 0) {
       var { onUpdateProductInCart, onChangeMessage } = this.props;
@@ -67,9 +69,10 @@ class CartItem extends Component {
     }
   };
 
-  onDelete = (product) => {
-    var { onDeleteProductInCart } = this.props;
+  onDelete = (product, quantity) => {
+    var { onDeleteProductInCart, onUpdateInventoryWithDelete } = this.props;
     onDeleteProductInCart(product);
+    onUpdateInventoryWithDelete(product, quantity);
   };
 
   showSubTotal = (price, quantity) => {

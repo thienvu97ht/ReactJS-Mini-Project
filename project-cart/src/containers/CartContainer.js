@@ -9,6 +9,7 @@ import {
   actDeleteProductInCart,
   actUpdateProductInCart,
   actChangeMessage,
+  actUpdateInventoryWithDelete,
 } from "../actions/index";
 
 class CartContainer extends Component {
@@ -23,7 +24,7 @@ class CartContainer extends Component {
   }
 
   showCartItem = (cart) => {
-    var { onDeleteProductInCart, onUpdateProductInCart, onChangeMessage } = this.props;
+    var { onDeleteProductInCart, onUpdateProductInCart, onChangeMessage, onUpdateInventoryWithDelete } = this.props;
     var result = (
       <tr>
         <td>{Message.MSG_CART_EMPTY}</td>
@@ -39,6 +40,7 @@ class CartContainer extends Component {
             onDeleteProductInCart={onDeleteProductInCart}
             onUpdateProductInCart={onUpdateProductInCart}
             onChangeMessage={onChangeMessage}
+            onUpdateInventoryWithDelete={onUpdateInventoryWithDelete}
           />
         );
       });
@@ -65,6 +67,7 @@ CartContainer.propTypes = {
   onDeleteProductInCart: PropTypes.func.isRequired,
   onUpdateProductInCart: PropTypes.func.isRequired,
   onChangeMessage: PropTypes.func.isRequired,
+  onUpdateInventoryWithDelete: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -83,6 +86,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onChangeMessage: (message) => {
       dispatch(actChangeMessage(message));
+    },
+    onUpdateInventoryWithDelete: (product, quantity) => {
+      dispatch(actUpdateInventoryWithDelete(product, quantity));
     },
   };
 };
