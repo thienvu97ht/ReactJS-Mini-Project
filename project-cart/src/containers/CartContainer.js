@@ -8,6 +8,7 @@ import * as Message from "../constants/Message";
 import {
   actDeleteProductInCart,
   actUpdateProductInCart,
+  actChangeMessage,
 } from "../actions/index";
 
 class CartContainer extends Component {
@@ -22,7 +23,7 @@ class CartContainer extends Component {
   }
 
   showCartItem = (cart) => {
-    var { onDeleteProductInCart, onUpdateProductInCart } = this.props;
+    var { onDeleteProductInCart, onUpdateProductInCart, onChangeMessage } = this.props;
     var result = (
       <tr>
         <td>{Message.MSG_CART_EMPTY}</td>
@@ -37,6 +38,7 @@ class CartContainer extends Component {
             index={index}
             onDeleteProductInCart={onDeleteProductInCart}
             onUpdateProductInCart={onUpdateProductInCart}
+            onChangeMessage={onChangeMessage}
           />
         );
       });
@@ -60,6 +62,9 @@ CartContainer.propTypes = {
       quantity: PropTypes.number.isRequired,
     })
   ).isRequired,
+  onDeleteProductInCart: PropTypes.func.isRequired,
+  onUpdateProductInCart: PropTypes.func.isRequired,
+  onChangeMessage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -75,6 +80,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onUpdateProductInCart: (product, quantity) => {
       dispatch(actUpdateProductInCart(product, quantity));
+    },
+    onChangeMessage: (message) => {
+      dispatch(actChangeMessage(message));
     },
   };
 };
