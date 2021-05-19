@@ -52,6 +52,9 @@ class Product extends Component {
     this.props.onAddToCart(product, quantity, inventory);
     this.props.onChangeMessage(Message.MSG_ADD_TO_CART_SUCCESS);
     this.props.onUpdateProductInventory(product, inventory);
+    if(inventory < 1) {
+      this.props.onChangeMessage(Message.MSG_INVENTORY_EMPTY);
+    }
   };
 
   showRating = (rating) => {
