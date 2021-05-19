@@ -52,6 +52,14 @@ const products = (state = initialState, action) => {
 
       return [...state];
 
+      case Types.UPDATE_INVENTORY_WITH_QUANTITY:
+        index = findProductInCart(state, product);
+        if (index !== -1) {
+          state[index].inventory = inventory;
+        }
+  
+        return [...state];
+
     default:
       return [...state];
   }

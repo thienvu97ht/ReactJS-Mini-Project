@@ -10,6 +10,7 @@ import {
   actUpdateProductInCart,
   actChangeMessage,
   actUpdateInventoryWithDelete,
+  actUpdateInventoryWithQuantity,
 } from "../actions/index";
 
 class CartContainer extends Component {
@@ -24,7 +25,13 @@ class CartContainer extends Component {
   }
 
   showCartItem = (cart) => {
-    var { onDeleteProductInCart, onUpdateProductInCart, onChangeMessage, onUpdateInventoryWithDelete } = this.props;
+    var {
+      onDeleteProductInCart,
+      onUpdateProductInCart,
+      onChangeMessage,
+      onUpdateInventoryWithDelete,
+      onUpdateInventoryWithQuantity,
+    } = this.props;
     var result = (
       <tr>
         <td>{Message.MSG_CART_EMPTY}</td>
@@ -41,6 +48,7 @@ class CartContainer extends Component {
             onUpdateProductInCart={onUpdateProductInCart}
             onChangeMessage={onChangeMessage}
             onUpdateInventoryWithDelete={onUpdateInventoryWithDelete}
+            onUpdateInventoryWithQuantity={onUpdateInventoryWithQuantity}
           />
         );
       });
@@ -89,6 +97,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onUpdateInventoryWithDelete: (product, quantity) => {
       dispatch(actUpdateInventoryWithDelete(product, quantity));
+    },
+    onUpdateInventoryWithQuantity: (product, inventory) => {
+      dispatch(actUpdateInventoryWithQuantity(product, inventory));
     },
   };
 };

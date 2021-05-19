@@ -46,3 +46,11 @@ export const actUpdateInventoryWithDelete = (product, quantity) => {
     quantity,
   };
 };
+
+export const actUpdateInventoryWithQuantity = (product, inventory) => {
+  return {
+    type: Types.UPDATE_INVENTORY_WITH_QUANTITY,
+    product,
+    inventory,
+  };
+};
