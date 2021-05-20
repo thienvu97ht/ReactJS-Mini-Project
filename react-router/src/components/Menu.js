@@ -1,5 +1,23 @@
 import React, { Component } from "react";
-import { Route, Link} from "react-router-dom";
+import { Route, Link } from "react-router-dom";
+
+const menus = [
+  {
+    name: "Trang Chủ",
+    to: "/",
+    exact: true,
+  },
+  {
+    name: "Giới Thiệu",
+    to: "/about",
+    exact: false,
+  },
+  {
+    name: "Liên Hệ",
+    to: "/contact",
+    exact: false,
+  },
+];
 
 const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
   return (
@@ -24,18 +42,25 @@ class Menu extends Component {
   render() {
     return (
       <nav className="navbar navbar-default">
-        <ul className="nav navbar-nav">
-          <MenuLink label="Trang Chủ" to="/" activeOnlyWhenExact={true} />
-          <MenuLink
-            label="Giới Thiệu"
-            to="/about"
-            activeOnlyWhenExact={false}
-          />
-          <MenuLink label="Liên Hệ" to="/contact" activeOnlyWhenExact={false} />
-        </ul>
+        <ul className="nav navbar-nav">{this.showMenu(menus)}</ul>
       </nav>
     );
   }
+
+  showMenu = (menus) => {
+    var result = null;
+    if (menus.length > 0) {
+      result = menus.map((menu, index) => {
+        return <MenuLink
+          key={index}
+          label={menu.name}
+          to={menu.to}
+          activeOnlyWhenExact={menu.exact}
+        />;
+      });
+    }
+    return result;
+  };
 }
 
 export default Menu;
