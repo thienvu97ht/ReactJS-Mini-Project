@@ -4,6 +4,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Products from "./components/Products";
 import Product from "./components/Product";
+import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 
 const routes = [
@@ -31,6 +32,11 @@ const routes = [
     path: "/products/:name",
     exact: true,
     main: ({match}) => <Product match={match} />
+  },
+  {
+    path: "/login",
+    exact: true,
+    main: () => <Login />
   },
   {
     path: "",
