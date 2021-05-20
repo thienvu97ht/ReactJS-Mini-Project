@@ -26,17 +26,19 @@ const routes = [
   {
     path: "/products",
     exact: false,
-    main: ({match}) => <Products match={match} />,
+    main: ({ match, location }) => (
+      <Products match={match} location={location} />
+    ),
   },
   {
     path: "/products/:name",
     exact: true,
-    main: ({match}) => <Product match={match} />
+    main: ({ match }) => <Product match={match} />,
   },
   {
     path: "/login",
     exact: true,
-    main: () => <Login />
+    main: ({ location }) => <Login location={location} />,
   },
   {
     path: "",
