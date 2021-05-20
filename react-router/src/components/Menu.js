@@ -17,6 +17,11 @@ const menus = [
     to: "/contact",
     exact: false,
   },
+  {
+    name: "Sản Phẩm",
+    to: "/products",
+    exact: false,
+  },
 ];
 
 const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
