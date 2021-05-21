@@ -9,10 +9,10 @@ class Menu extends Component {
         </a>
         <ul className="nav navbar-nav">
           <li className="active">
-            <a href="!#">Trang Chủ</a>
+            <a>Trang Chủ</a>
           </li>
           <li>
-            <a href="!#">Quản Lý Sản Phẩm</a>
+            <a>Quản Lý Sản Phẩm</a>
           </li>
         </ul>
       </div>
