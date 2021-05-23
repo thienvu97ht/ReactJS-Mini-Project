@@ -25,7 +25,7 @@ class ProductListPage extends Component {
     var { products } = this.state;
     callApi(`products/${id}`, "DELETE", null).then((res) => {
       if (res.status === 200) {
-        var index = this.findIndex(products, id);
+        var index = products.findIndex(product => product.id === id)
         if (index !== -1) {
           products.splice(index, 1);
           this.setState({
@@ -35,12 +35,6 @@ class ProductListPage extends Component {
         
       }
     });
-  };
-
-  findIndex = (products, id) => {
-    var result = -1;
-    result = products.findIndex(product => product.id === id)
-    return result;
   };
 
   render() {

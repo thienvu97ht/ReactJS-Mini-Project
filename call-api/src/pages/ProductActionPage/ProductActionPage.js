@@ -13,6 +13,22 @@ class ProductActionPage extends Component {
     };
   }
 
+  componentDidMount() {
+    var { match } = this.props;
+    if (match) {
+      var id = match.params.id;
+      callApi(`products/${id}`, "GET", null).then((res) => {
+        var data = res.data;
+        this.setState({
+          id: data.id,
+          txtName: data.name,
+          txtPrice: data.price,
+          chkbStatus: data.status,
+        });
+      });
+    }
+  }
+
   onChange = (e) => {
     var target = e.target;
     var name = target.name;
@@ -73,6 +89,7 @@ class ProductActionPage extends Component {
                 name="chkbStatus"
                 value={chkbStatus}
                 onChange={this.onChange}
+                checked={chkbStatus}
               />
               Còn Hàng
             </label>
@@ -81,7 +98,9 @@ class ProductActionPage extends Component {
           <button type="submit" className="btn btn-primary mr-10">
             Lưu Lại
           </button>
-          <Link to="/product-list" className="btn btn-danger">Trở Lại</Link>
+          <Link to="/product-list" className="btn btn-danger">
+            Trở Lại
+          </Link>
         </form>
       </div>
     );
