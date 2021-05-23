@@ -12,13 +12,13 @@ class App extends Component {
           {/* Menu */}
           <Menu />
           {/* Nội Dung */}
-          <Switch>{this.showContentMenus(routes)}</Switch>
+          <Switch>{this.showContenMenus(routes)}</Switch>
         </div>
       </Router>
     );
   }
 
-  showContentMenus = (routes) => {
+  showContenMenus = (routes) => {
     var result = null;
     if (routes.length > 0) {
       result = routes.map((route, index) => {

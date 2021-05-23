@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Route } from "react-router-dom";
+import Product from "./Product";
 
 class Products extends Component {
   render() {
@@ -36,16 +37,15 @@ class Products extends Component {
         </NavLink>
       );
     });
-
-    var {location} = this.props;
-    console.log(location);
-
+    
     return (
       <div className="container">
         <h1>Danh Sách Sản Phẩm</h1>
-
         <div className="row">
           <ul className="list-group">{result}</ul>
+        </div>
+        <div className="row">
+          <Route path="/products/:name" component={Product} />
         </div>
       </div>
     );
