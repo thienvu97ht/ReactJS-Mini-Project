@@ -40,22 +40,34 @@ class ProductActionPage extends Component {
 
   onSave = (e) => {
     e.preventDefault();
-    var { txtName, txtPrice, chkbStatus } = this.state;
+    var { id, txtName, txtPrice, chkbStatus } = this.state;
     var { history } = this.props;
 
-    callApi("products", "POST", {
-      name: txtName,
-      price: txtPrice,
-      status: chkbStatus,
-    }).then((res) => {
-      history.goBack();
-    });
+    if (id) {
+      callApi(`products/${id}`, "PUT", {
+        name: txtName,
+        price: txtPrice,
+        status: chkbStatus,
+      }).then((res) => {
+        history.goBack();
+      });
+    } else {
+      callApi("products", "POST", {
+        name: txtName,
+        price: txtPrice,
+        status: chkbStatus,
+      }).then((res) => {
+        history.goBack();
+      });
+    }
   };
 
   render() {
-    var { txtName, txtPrice, chkbStatus } = this.state;
+    var { id, txtName, txtPrice, chkbStatus } = this.state;
+    var title = id ? "Sửa Sản Phẩm" : "Thêm Sản Phẩm";
     return (
       <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <h1 className="mb-20">{title}</h1>
         <form onSubmit={this.onSave}>
           <div className="form-group">
             <label>Tên Sản Phẩm:</label>
