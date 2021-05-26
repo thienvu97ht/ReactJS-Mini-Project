@@ -4,13 +4,19 @@ import { withStyles } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 import TaskBoard from "../Taskboard/index";
 import theme from "../../commons/Theme/index";
+import { Provider } from "react-redux";
+import configureStore from "../../redux/configureStore";
+
+const store = configureStore();
 
 class App extends Component {
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <TaskBoard />
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <TaskBoard />
+        </ThemeProvider>
+      </Provider>
     );
   }
 }
