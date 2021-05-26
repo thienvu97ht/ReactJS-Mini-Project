@@ -12,27 +12,6 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import * as taskActions from "../../actions/task";
 
-const listTask = [
-  {
-    id: 1,
-    title: "Read book",
-    description: "Read material ui book",
-    status: 0,
-  },
-  {
-    id: 2,
-    title: "Play game",
-    description: "With my friend",
-    status: 2,
-  },
-  {
-    id: 3,
-    title: "Play football",
-    description: "With my friend",
-    status: 1,
-  },
-];
-
 class TaskBoard extends Component {
   constructor(props) {
     super(props);
@@ -43,11 +22,12 @@ class TaskBoard extends Component {
 
   componentDidMount() {
     const { taskActionCreators } = this.props;
-    const { fetchListTask } = taskActionCreators;
-    fetchListTask();
+    const { fetchListTaskRequest } = taskActionCreators;
+    fetchListTaskRequest();
   }
 
   renderBoard = () => {
+    const { listTask } = this.props;
     let xhtml = null;
     xhtml = (
       <Grid container spacing={2}>
@@ -104,11 +84,16 @@ class TaskBoard extends Component {
 TaskBoard.propTypes = {
   classes: PropTypes.object,
   taskActions: PropTypes.shape({
-    fetchListTask: PropTypes.func,
+    fetchListTaskRequest: PropTypes.func,
   }),
+  listTask: PropTypes.array,
 };
 
-const mapStateToProps = null;
+const mapStateToProps = (state) => {
+  return {
+    listTask: state.task.listTask,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     taskActionCreators: bindActionCreators(taskActions, dispatch),
