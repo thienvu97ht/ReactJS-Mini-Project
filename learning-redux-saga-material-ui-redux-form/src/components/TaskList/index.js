@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import styles from "./styles";
-import TaskItem from "../TaskItem/index"
+import TaskItem from "../TaskItem/index";
 
 class TaskList extends Component {
   render() {
@@ -15,9 +15,7 @@ class TaskList extends Component {
         </Box>
         <div className={classes.wrapperListTask}>
           {task.map((task, index) => {
-            return (
-              <TaskItem key={task.id} task={task} status={status} />
-            );
+            return <TaskItem key={task.id} task={task} status={status} />;
           })}
         </div>
       </Grid>
