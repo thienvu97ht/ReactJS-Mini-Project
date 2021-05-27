@@ -1,11 +1,19 @@
-function* helloGeneratorFuncion() {
-  yield 2019;
-  yield 2021;
-  return "Tự học lập trình redux-saga";
+console.log("Generator function: generate trong generator");
+
+// Xin chào ===> Redux-Saga ===> Kết thúc
+
+function* printName() {
+  yield "redux-saga";
 }
 
-const result = helloGeneratorFuncion(); // iterator
+function* hello() {
+  yield "xin chào";
+  yield* printName();
+  yield "Kết thúc";
+}
 
-console.log("result 1: ", result.next());
-console.log("result 2: ", result.next());
-console.log("result 3: ", result.next());
+const interator = hello();
+
+console.log("Result 1: ", interator.next());
+console.log("Result 2: ", interator.next());
+console.log("Result 3: ", interator.next());
