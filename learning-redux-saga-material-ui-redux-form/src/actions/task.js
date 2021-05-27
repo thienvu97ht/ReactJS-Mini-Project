@@ -8,7 +8,7 @@ export const fetchListTask = () => {
 };
 
 export const fetchListTaskSuccess = (data) => {
-  return {
+  return {  
     type: taskConstants.FETCH_TASK_SUCCESS,
     payload: {
       data,
